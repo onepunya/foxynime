@@ -1,12 +1,15 @@
 import { combineReducers } from "redux";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import { baseAnimeApi, baseComicApi, baseMovieApi } from "./axios-base-query";
+import { baseAnimeApi } from "./axios-base-query";
 
+/**
+ * Storage aman untuk SSR (Next.js)
+ */
 export const createNoopStorage = () => ({
   getItem() {
     return Promise.resolve(null);
   },
-  setItem(_key, value) {
+  setItem(_key: string, value: any) {
     return Promise.resolve(value);
   },
   removeItem() {
@@ -23,13 +26,14 @@ export const rootPersistConfig = {
   key: "root",
   storage,
   keyPrefix: "redux-",
-  whitelist: [],
+  whitelist: [], // kosong karena RTK Query gak perlu persist
 };
 
+/**
+ * ROOT REDUCER (ONLY ANIME)
+ */
 const rootReducer = combineReducers({
   [baseAnimeApi.reducerPath]: baseAnimeApi.reducer,
-  [baseComicApi.reducerPath]: baseComicApi.reducer,
-  [baseMovieApi.reducerPath]: baseMovieApi.reducer,
 });
 
 export default rootReducer;
