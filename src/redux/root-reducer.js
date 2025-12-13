@@ -9,7 +9,7 @@ export const createNoopStorage = () => ({
   getItem() {
     return Promise.resolve(null);
   },
-  setItem(_key: string, value: any) {
+  setItem(_key, value) {
     return Promise.resolve(value);
   },
   removeItem() {
@@ -26,7 +26,7 @@ export const rootPersistConfig = {
   key: "root",
   storage,
   keyPrefix: "redux-",
-  whitelist: [], // kosong karena RTK Query gak perlu persist
+  whitelist: [], // RTK Query tidak perlu persist
 };
 
 /**
